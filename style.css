@@ -10,6 +10,10 @@ body{
     align-items: center;
     min-height: 100vh;
 }
+h2{
+    text-align: center;
+    padding: 1em 2em;
+}
 .container{
     border-radius: 10px;
     box-shadow: 5px 5px 10px 2px black;
@@ -17,12 +21,15 @@ body{
     overflow: hidden;
 }
 .quiz-header{
-    padding: 5em;
+    padding: 2em 5em;
 }
 
 ul{
     list-style: none;
     padding: 0;
+}
+ul li{
+    padding: 1em 0 1em 0; 
 }
 .btn{
     background-color: blueviolet;
