@@ -1,82 +1,70 @@
-const quizData = [
-    {
-        question: 'You are at an intersection and see a pedestrian crossing the road into which you are turning. You must:',
-        a:'Give the way to pedestrian',
-        b:'Sound your horn to warn the pedestrian to get out of the way',
-        c:'Swerve around the pedestrian to avoid hitting them',
-        answer:'a'
-    },
-    {
-        question:'Riders may make themselves more noticeable to car drivers by:',
-        a:'Riding to the side of cars all the time',
-        b:'Riding closely behind the cars',
-        c:'Continuously blow the horn',
-        answer: 'a'
-    },
-    {
-        question:'How old must you be to obtain a learner rider licence?',
-        a:16,
-        b:14,
-        c:18,
-        answer:'a'
-    }
-];
+let randomNumber = Math.floor(Math.random*100)+1;
 
+        const guesses = document.querySelector('.guesses');
+        const lastResult = document.querySelector('.lastResult');
+        const lowOrHigh = document.querySelector('.lowOrHigh');
 
-const answerEle = document.querySelectorAll('.answer'); // select all radio buttons
-const quiz = document.getElementById('quiz');
-const quest = document.getElementById('quest');
-const optionA = document.getElementById('optionA');
-const optionB = document.getElementById('optionB');
-const optionC = document.getElementById('optionC');
-const submit_btn = document.getElementById('submit');
+        const guessSubmit = document.querySelector('.guessSubmit');
+        const guessField = document.querySelector('.guessField');
 
-var current_question =0;
-var score = 0;
+        let guessCount =1;
+        let resetButton;
 
-loadQuiz();
+        function checkGuess() {
+            let userGuess = Number(guessField.value);
+            if(guessCount===1){
+                guesses.textContent = "Previous Guesses: ";
+            }
+            guesses.textContent += userGuess +' ';
 
-function loadQuiz(){
-    deselectAnswer();
-
-    quest.innerHTML = quizData[current_question]['question'];
-    optionA.innerHTML= quizData[current_question]['a'];
-    optionB.innerHTML= quizData[current_question]['b'];
-    optionC.innerHTML= quizData[current_question]['c'];
-}
-
-function getSelected(){
-    let answer = undefined;
-    answerEle.forEach((ans)=>{
-        if(ans.checked){
-            answer = ans.id;
+            if(userGuess === randomNumber){
+                lastResult.textContent = "Congrats! You got it right.";
+                lastResult.style.backgroundColor = 'green';
+                lowOrHigh.textContent ='';
+                setGameOver();
+            }
+            else if(guessCount===10){
+                lastResult.textContent = "Game over !!";
+                setGameOver();
+            }
+            else{
+                lastResult.textContent = "Wrong";
+                lastResult.style.backgroundColor = 'red';
+                if(userGuess < randomNumber){
+                    lowOrHigh.textContent = "Guess is too low.";
+                }
+                else if(userGuess > randomNumber){
+                    lowOrHigh.textContent = "Guess is too high";
+                }
+            }
+            guessCount++;
+            guessField.value = '';
+            guessField.focus();
         }
-    });
-    return answer;
-}
+        guessSubmit.addEventListener('click',checkGuess);
 
-function deselectAnswer(){
-    answerEle.forEach(function(ans){
-        ans.checked = false;
-    });
-}
+        function setGameOver(){
+            guessField.disabled = true;
+            guessSubmit.disabled = true;
+            resetButton = document.createElement('button');
+            resetButton.textContent = "Start New Game";
+            document.body.append(resetButton);
+            resetButton.addEventListener('click',resetGame);
+        }
+        function resetGame(){
+            guessCount =1;
+            const resetParas = document.querySelectorAll('.resultPara p');
+            for(let i=0;i<resetParas.length;i++){
+                resetParas[i].textContent = '';
+            }
 
+            resetButton.parentNode.removeChild(resetButton);
+            guessField.disabled = false;
+            guessSubmit.disabled = false;
+            guessField.value = '';
+            guessField.focus();
 
-submit_btn.addEventListener('click',function(){
-   const answer = getSelected();
-   console.log(answer);
-   if(answer){
-       if(answer===quizData[current_question].answer){
-           score++;
-       }
-       current_question++;
-       if(current_question<quizData.length){
-           loadQuiz();
-       }
-       else{
-           quiz.innerHTML = `<h2> Your score is ${score}/${quizData.length}</h2>
-           <button onclick="location.reload()" class="btn">Reload</button>`;
-       }
-   }
-    
-});
+            lastResult.style.backgroundColor = 'white';
+
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+        }
