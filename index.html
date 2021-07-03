@@ -5,29 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-    <title>Quiz-App</title>
+    <title>Number Guessing Game</title>
 </head>
 <body>
-    <div class="container" id="quiz">
-        <div class="quiz-header">
-            <h2 id="quest">Question Text</h2>
-            <ul>
-                <li>
-                    <input type="radio" id="a" name="answer" class="answer">
-                    <label id="optionA" for="a">OptionA</label>
-                </li>
-                <li>
-                    <input type="radio" id="b" name="answer" class="answer">
-                    <label id="optionB" for="b">OptionB</label>
-                </li>
-                <li>
-                    <input type="radio" id="c" name="answer" class="answer">
-                    <label id="optionC" for="c">OptionC</label>
-                </li>
-            </ul>
-        </div>
-        <button type="submit" class="btn" id="submit">Submit</button>
+    <h1>Number Guessing Game</h1>
+    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+
+    <di class="form">
+        <label for="guessField">Enter a guess:</label>
+        <input type="text" id="guessField" class="guessField">
+        <input type="button" value="Submit Guess" class="guessSubmit">
+    </di>
+
+    <div class="resultPara">
+        <p class="guesses"></p>
+        <p class="lastResult"></p>
+        <p class="lowOrHigh"></p>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
