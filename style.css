@@ -7,3 +7,8 @@ body{
     max-width: 800px;
     margin: 0 auto;
 }
+
+.lastResult{
+    color: white;
+    padding: 5px;
+}
